@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Board</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        header {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .search-bar {
+            background: #e0e0e0;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .search-bar input[type="text"] {
+            padding: 0.5rem;
+            width: 50%;
+            border: 1px solid #ccc;
+        }
+
+        .job-listings, .featured-jobs, .employer-jobs, .candidate-applications, .job-detail, .application-form, .login-form, .register-form, .profile {
+            padding: 20px 0;
+        }
+
+        .job-listing, .application {
+            background: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-listing h2, .application h3 {
+            margin-top: 0;
+        }
+
+        .job-listing p, .application p {
+            margin-bottom: 10px;
+        }
+
+        .job-listing a, .application a {
+            background: #007bff;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 20px;
+        }
+
+        .application-form form, .login-form form, .register-form form, .profile form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            margin: auto;
+        }
+
+        .application-form label, .login-form label, .register-form label, .profile label {
+            margin-bottom: 5px;
+        }
+
+        .application-form input, .login-form input, .register-form input, .profile input, .application-form textarea, .profile textarea {
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .application-form button, .login-form button, .register-form button, .profile button {
+            background: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .welcome-message {
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+
+            .search-bar input[type="text"] {
+                width: 90%;
+            }
+
+            .application-form form, .login-form form, .register-form form, .profile form {
+                width: 90%;
+            }
+        }
+
+        /* Classes for JavaScript interaction */
+        .search-results {
+            display: none;
+        }
+
+        .search-results.visible {
+            display: block;
+        }
+
+        .application-success, .application-error {
+            display: none;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .application-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .application-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Job Board</h1>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#job-listings">Job Listings</a>
+            <a href="#login">Login</a>
+            <a href="#register">Register</a>
+            <a href="#employer-dashboard">Employer</a>
+            <a href="#candidate-dashboard">Candidate</a>
+        </nav>
+    </header>
+
+    <div id="home" class="welcome-message">
+        <h2>Find Your Dream Job Today!</h2>
+        <p>Explore a wide range of job opportunities.</p>
+    </div>
+
+    <div id="job-listings" class="container job-listings">
+        <h2>Job Listings</h2>
+        <div class="search-bar">
+            <input type="text" placeholder="Search jobs..." class="search-input">
+        </div>
+        <div class="job-listing">
+            <h3>Software Engineer</h3>
+            <p>Company: Tech Innovations</p>
+            <p>Location: San Francisco, CA</p>
+            <p>Description: Develop web applications...</p>
+            <a href="#job-detail?id=1" class="job-link">View Details</a>
+        </div>
+        <div class="job-listing">
+            <h3>Marketing Manager</h3>
+            <p>Company: Global Marketing</p>
+            <p>Location: New York, NY</p>
+            <p>Description: Lead marketing campaigns...</p>
+            <a href="#job-detail?id=2" class="job-link">View Details</a>
+        </div>
+        <div class="search-results hidden">
+          </div>
+    </div>
+
+    <div id="job-detail" class="container job-detail">
+        <h2>Job Detail</h2>
+        <p>Company: Tech Innovations</p>
+        <p>Location: San Francisco, CA</p>
+        <p>Description: Develop and maintain web applications...</p>
+        <p>Requirements: Bachelor's degree, 3+ years experience...</p>
+        <a href="#apply?jobId=1" class="apply-link">Apply Now</a>
+    </div>
+
+    <div id="apply" class="container application-form">
+        <h2>Apply for Job</h2>
+        <form class="application-form-submit">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="resume">Resume:</label>
+            <input type="file" id="resume" name="resume" required>
+            <button type="submit">Submit Application</button>
+        </form>
+        <div class="application-success">Application submitted successfully!</div>
+        <div class="application-error">Application submission failed.</div>
+    </div>
+
+    <div id="employer-dashboard" class="container employer-jobs">
+        <h2>Employer Dashboard</h2>
+        <div class="job-listing">
+            <h3>Software Engineer</h3>
+            <p>Status: Active</p>
+            <a href="#edit-job?id=1">Edit</a>
+            <a href="#">Delete</a>
+        </div>
+    </div>
+
+    <div id="candidate-dashboard" class="container candidate-applications">
+        <h2>Candidate Dashboard</h2>
+        <div class="application">
+            <h3>Software Engineer</h3>
+            <p>Status: Pending</p>
+            <a href="#application-detail?id=1">View</a>
+        </div>
+    </div>
+
+    <div id="login" class="container login-form">
+        <h2>Login</h2>
+        <form class="login-form-submit">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <div id="register" class="container register-form">
+        <h2>Register</h2>
+        <form class="register-form-submit">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+    <footer>
+        <p>&copy; 2025 Job Board</p>
+    </footer>
+
+    <script>
+        // Basic javascript to make the search bar work.
+        const searchInput = document.querySelector('.search-input');
+        const jobListings = document.querySelectorAll('.job-listing');
+        const searchResults = document.querySelector('.search-results');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            let resultsHTML = '';
+            let resultsFound = false;
+
+            jobListings.forEach(listing => {
+                const jobTitle = listing.querySelector('h3').textContent.toLowerCase();
+                const company = listing.querySelector('p:nth-child(2)').textContent.toLowerCase();
+                const location = listing.querySelector('p:nth-child(3)').textContent.toLowerCase();
+                const description = listing.querySelector('p:nth-child(4)').textContent.toLowerCase();
+                const link = listing.querySelector('.job-link').href;
+
+                if (jobTitle.includes(searchTerm) || company.includes(searchTerm) || location.includes(searchTerm) || description.includes(searchTerm)) {
+                    resultsHTML += `<div class="job-listing"><h3>${listing.querySelector('h3').textContent}</h3><p>${listing.querySelector('p:nth-child(2)').textContent}</p><p>${listing.querySelector('p:nth-child(3)').textContent}</p><p>${listing.querySelector('p:nth-child(4)').textContent}</p><a href="${link}">View Details</a></div>`;
+                    resultsFound = true;
+                }
+            });
+
+            if (resultsFound) {
+                searchResults.innerHTML = resultsHTML;
+                searchResults.classList.remove('hidden');
+                jobListings.forEach(listing=>listing.classList.add('hidden'));
+            } else {
+                searchResults.innerHTML = '<p>No results found.</p>';
+                searchResults.classList.remove('hidden');
+                jobListings.forEach(listing=>listing.classList.add('hidden'));
+            }
+
+            if(searchTerm === ""){
+                searchResults.classList.add('hidden');
+                jobListings.forEach(listing=>listing.classList.remove('hidden'));
+            }
+        });
+
+        // Example for application submission (add backend integration)
+        document.querySelector('.application-form-submit').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Add your logic to submit the application data (e.g., using fetch or XMLHttpRequest)
+            // Show success or error messages
+            document.querySelector('.application-success').style.display = 'block'; // Or 'flex'
+            // document.querySelector('.application-error').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
